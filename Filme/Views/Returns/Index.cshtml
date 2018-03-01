@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Filme.Core.Models.Rental>
+
+@{
+    ViewBag.Title = "Return List";
+}
+
+<h2>Customers with movies to return</h2>
+
+<table id="customerRents" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td>Customer</td>
+            <td>Movie</td>
+            <td>Date borrowed</td>
+        </tr>
+    </thead>
+
+
+    @*<tbody>
+        @foreach (var m in Model)
+        {
+            <tr>
+                <td><a href="/Returns/details/@m.Customer.Id">@m.Customer.Name</a></td>
+                <td>@m.Movie.Name</td>
+                <td>@m.DateRented</td>
+            </tr>
+        }
+    </tbody>*@
+</table>
+@section scripts
+{
+    <style>
+        body {
+            background: none;
+        }
+    </style>
+    <script>
+
+        $(document).ready(function() {
+
+            var table = $("#customerRents").DataTable({
+                ajax: {
+                    url: "/api/return",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "customer.name",
+                        render: function(data, type, customer) {
+                            //return "<a href='/returns/details/" + id + "'>" + name + "</a>";
+                            return "<a href=/returns/details/" + customer.customer.id  + ">" + customer.customer.name + "</a>";
+                        }
+                    },
+                    {
+                        data: "movie.name"
+                    },
+                    {
+                        data: "dateRented",
+                        render: function(data) {
+                            return moment.utc(data).local().format('l');
+                        }
+                    }
+                ]
+
+
+            });
+        });
+    </script>
+}

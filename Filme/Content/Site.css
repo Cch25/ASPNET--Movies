@@ -1,0 +1,198 @@
+﻿body {
+    background: #808080;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background-image: url('https://www.quirkybyte.com/wp-content/uploads/2017/03/Logan-Movie-Wallpapers.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    color: #000000;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.field-validation-error, label.error {
+    color: red;
+}
+
+.input-validation-error, input.error {
+    border: 1px solid red;
+}
+
+.btn-add-movies {
+    margin: 0px 0px 8px 0px;
+}
+
+/*team changes to the theme*/
+.navbar-inverse {
+    background-color: #111938;
+    border-color: #0f3875;
+}
+
+    .navbar-inverse .navbar-brand {
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 130%;
+    }
+
+        .navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
+            color: #ff0660;
+            background-color: transparent;
+        }
+
+    .navbar-inverse .navbar-nav:hover > li > a {
+        color: #ffffff;
+    }
+
+/* Pull right and left  */
+div.pullRightLeft a:before, div.pullRightLeft a:after {
+    position: absolute;
+    width: 0px;
+    height: 100%;
+    top: 0px;
+    content: '';
+    background: #ff0660;
+    opacity: 0.3;
+    transition: all 0.3s;
+}
+
+div.pullRightLeft a:before {
+    left: 0px;
+}
+
+div.pullRightLeft a:after {
+    right: 0px;
+}
+
+div.pullRightLeft a:hover:before, div.pullRightLeft a:hover:after {
+    width: 100%;
+}
+
+
+/*override table index */
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.5s;
+    width: 30%;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        width: 35%;
+    }
+
+img {
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.container {
+    padding: 4px 6px;
+}
+
+.infos {
+    display:inline-block;
+}
+.viewInfos {
+    display: none;
+}
+@-webkit-keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}  
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.infos:hover .viewInfos {
+    display: inline-grid;
+    -webkit-animation: fadeIn 1s;
+    -ms-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+/*Align form in center*/
+.form {
+    width: 370px;
+    height: 250px;
+    margin: 0 auto;
+    background-color: #0000003d;
+    border-radius: 5px;
+    padding: 20px;
+}
+.descriptionform {
+    height: auto;
+    width: 450px;
+    background-color: #0000003d;
+    border-radius: 5px;
+    padding: 5px;
+
+}
+.form1 {
+    width: 350px;
+    /* color: white; */
+    /* height: 250px; */
+    /* float: left; */
+    margin: 0 auto;
+    background-color: #e4056eb3;
+    border-radius: 5px;
+    /* font-weight: bolder; */
+    font-size: 15px;
+    margin: 5px;
+}
+
+/*table override*/
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    z-index: 3;
+    color: #ffffff;
+    background-color: #e8079b;
+    border-color: #d4079b;
+    cursor: default;
+}
+
+.pagination > li > a, .pager > li > a, .pagination > li > span, .pager > li > span {
+    position: relative;
+    top: 0;
+    border-width: 0 1px 4px 1px;
+    color: #d60c0c;
+    font-size: 12px;
+    /* font-weight: bold; */
+    /* text-transform: uppercase; */
+}
+
+.pagination > li > a, .pager > li > a, .pagination > li > span, .pager > li > span {
+    position: relative;
+    top: 0;
+    border-width: 0 1px 4px 1px;
+    color: #555555;
+    font-size: 12px;
+    /* font-weight: bold; */
+    /* text-transform: uppercase; */
+}
+
+#Customers_Birthdate, #Movies_ReleaseDate {
+    width: 300px;
+    height: 38px;
+    font-size: 20px;
+}
+

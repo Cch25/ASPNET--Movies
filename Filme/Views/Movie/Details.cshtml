@@ -1,0 +1,103 @@
+﻿@model Filme.Core.Models.Movie
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@**@
+<h2 style="color:wheat">Movie description</h2>
+
+<table id="detailsMov" class="table table-responsive">
+    <thead>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <div id="images"></div>
+            </td>
+            <td>
+
+                <div class="list-group descriptionform">
+
+                    <div class="list-group-item active">
+                        <div>
+                            <span class="glyphicon glyphicon-star rating-js" style="font-weight: bolder;color: wheat; float: right;">Unavailable</span>
+                            <h4 class="list-group-item-heading">Title</h4>
+
+                            <p class="list-group-item-text" style="color: black;">@Model.Name</p>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <h4 class="list-group-item-heading">Genre</h4>
+                        <p class="list-group-item-text" style="color:black;">@Model.Genre.Name</p>
+                    </div>
+                    <div class="list-group-item">
+                        <h4 class="list-group-item-heading">Release Date</h4>
+                        <p class="list-group-item-text" style="color:black;">@Model.ReleaseDate.ToLongDateString()</p>
+                    </div>
+                    <div class="list-group-item">
+                        <h4 class="list-group-item-heading">Date Added</h4>
+                        <p class="list-group-item-text" style="color:black;">@Model.DateAdded.ToLongDateString()</p>
+                    </div>
+                    <div class="list-group-item">
+                        <h4 class="list-group-item-heading">Available in Stock</h4>
+                        <p class="list-group-item-text" style="color:black;">@Model.AvailableInStock</p>
+                    </div>
+                    <div class="list-group-item">
+                        <h4 class="list-group-item-heading">Description</h4>
+                        <p class="list-group-item-text descOverride" style="color:black;">@Model.Description</p>
+                    </div>
+                </div>
+
+            </td>
+
+
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+@section scripts{
+    <style>
+        body {
+            /*background: none;*/
+            color: wheat;
+        }
+
+        .imageResize {
+            height: auto;
+            width: auto;
+            max-width: 500px;
+            max-height: 430px;
+        }
+    </style>
+    <script>
+        //using(var response = httpClient.GetAsync("search/movie?api_key=3505ad6b41f77072729ef39d38f8032b&query=Banshee"))
+        $( document ).ready(function() {
+            console.log("ready!");
+
+            var connectionString =
+                "https://api.themoviedb.org/3/search/movie?api_key=3505ad6b41f77072729ef39d38f8032b&query=@Model.Name";
+
+            (function() {
+                $.ajax({
+                    url: connectionString,
+                    context: document.body
+                }).done(function (data) {
+                    console.log(data);
+                    var linkToImg = 'https://image.tmdb.org/t/p/w500' + data.results[0].poster_path;
+                    console.log(linkToImg);
+                    $("<img>").attr("src", linkToImg).addClass("imageResize").appendTo("#images");
+                    var linkToDescription = data.results[0].overview;
+                    if (@Model.Description.Length < 30)
+                        $(".descOverride").text(linkToDescription);
+                    var rating = data.results[0].vote_average;
+                    $(".rating-js").text("Rating "+rating+"/10");
+                });
+            })();
+
+        });
+    </script>
+}

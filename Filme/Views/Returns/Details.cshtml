@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Filme.Core.Models.Rental>
+
+@{
+    ViewBag.Title = "Movies Borrowed";
+}
+
+<h2>List with all unreturned movies</h2>
+
+<table id="customerList" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td>Movies</td>
+            <td>Date borrowed</td>
+            <td>Return movie</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var m in Model)
+        {
+            <tr>
+                <td>
+                    <a href=/movie/details/@m.Movie.Id>@m.Movie.Name</a>
+                </td>
+                <td>
+                    @if (DateTime.Now < @m.DateRented.AddDays(1))
+                    {
+                        <p>  @m.DateRented.ToShortDateString() &nbsp; &nbsp; &nbsp; &nbsp; <span class="label label-success"> On time</span></p>
+                    <td> <button class="btn btn-success btn-sm js-update" id=@m.Customer.Id>Return</button></td>
+                }
+                else
+                {
+                    <p>  @m.DateRented.ToShortDateString()  &nbsp; &nbsp; &nbsp; &nbsp;<span class="label label-danger"> Late</span></p>
+                    <td> <button class="btn btn-danger btn-sm js-update" id=@m.Customer.Id>Return</button></td>
+                }
+                    </td>
+                </tr>
+            }
+    </tbody>
+</table>
+
+@section scripts
+{
+    <style>
+        body {
+            background: none;
+        }
+    </style>
+    <script>
+        $("#customerList").on("click", ".js-update", function () {
+            var button = $(this);
+            $.ajax({
+                url: "/api/return/" + button.attr("id"),
+                method: "POST",
+                success: function () {
+                    button.closest('tr').fadeOut();
+                },
+                fail: function () {
+                    alert("Something went wrong");
+                }
+            });
+        });
+    </script>
+}

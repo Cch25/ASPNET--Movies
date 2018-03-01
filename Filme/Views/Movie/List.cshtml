@@ -1,0 +1,100 @@
+﻿@model IEnumerable<Filme.Core.Models.Movie>
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Movie List</h2>
+
+<a href="@Url.Action("Edit", "Movie")" class="btn btn-warning btn-add-movies">
+    Add movie
+    <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+</a>
+
+<table id="movies" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td>Movie</td>
+            <td>Release Year</td>
+            <td>Movie Genre</td>
+            <td>In Stock</td>
+            <td>Options</td>
+        </tr>
+    </thead>
+</table>
+
+@section scripts
+{
+    <style>
+        body {
+            background: none;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+
+            var table = $("#movies").DataTable({
+                ajax: {
+                    url: '/api/movies',
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "id",
+                        render: function (data, type, movie) {
+                            return "<a  href=/movie/details/" + data + ">" + movie.name + "  </a>";
+                        }
+                    },
+                    {
+                        data: "releaseDate",
+                        render: function (data) {
+                            return moment.utc(data).local().format('l');
+
+                        }
+
+                    },
+                    {
+                        data: "genre.name"
+                    },
+                    {
+                        data: 'availableInStock',
+                        render: function (data) {
+                            return "<span class='label label-success'>" + data + "</span";
+                        }
+                    },
+                    {
+                        data: "name",
+                        render: function (data,type,movie) {
+                            return "<a class = 'btn btn-success btn-sm' href=/movie/update/" + movie.id + ">Edit</a>"+
+                                " <button style='padding:5px;' class='btn btn-danger btn-sm js-delete' id='" + movie.id + "' >Delete</button> ";
+                        }
+
+                    }
+
+                ]
+
+            });
+
+        $("#movies").on("click", ".js-delete", function () {
+            var button = $(this);
+            bootbox.confirm("Are you sure you want to delete this movie?",
+                function (response) {
+                    if (response) {
+                        $.ajax({
+                            url: "/api/movies/" + button.attr("id"),
+                            method: "DELETE",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();
+                            },
+                            fail: function () {
+                                alert("Something went wrong");
+                            }
+                        });
+                    }
+                });
+        });
+            });
+
+    </script>
+}
